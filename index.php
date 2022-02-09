@@ -61,7 +61,35 @@
 
 // TODO Votre code ici.
 
-try {
-    ...
-}
-catch...
+require __DIR__ . '/Classes/Config.php';
+require __DIR__ . '/Classes/DBSingleton.php';
+
+$con = DBSingleton::PDO();
+
+$sql1 = "
+        CREATE TABLE utilisateur (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            family_name VARCHAR(50) NOT NULL,
+            name VARCHAR(50) NOT NULL,
+            email VARCHAR(100) NOT NULL,
+            password VARCHAR(12) NOT NULL,
+            adresse VARCHAR(150) NOT NULL,
+            postal_code TEXT NOT NULL,
+            country VARCHAR(150) NOT NULL,
+            date_join DATETIME DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(email)
+        )
+    ";
+
+$sql2 = "
+            CREATE TABLE produit (
+                id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                title VARCHAR(50) NOT NULL,
+                price FLOAT NOT NULL,
+                description_courte TINYTEXT NOT NULL,
+                description_longue MEDIUMTEXT NOT NULL
+        )
+    ";
+
+$con->exec($sql1);
+$con->exec($sql2);
